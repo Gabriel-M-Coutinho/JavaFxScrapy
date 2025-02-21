@@ -1,5 +1,7 @@
 package com.example.teste.Model;
 
+import java.util.List;
+
 public class CNPJ {
 
     private String CNPJ;
@@ -19,12 +21,18 @@ public class CNPJ {
     private String MunicipioIBGE;
     private String Endereco;
     private String CEP;
+    private String Bairro;
+    private String Complemento;
+    private String Estado;
+    private String Numero;
+    private String CnaePrincipal;
+    private List<String> CnaeSecundario;
 
     public CNPJ() {
-        // Construtor vazio
+
     }
 
-    public CNPJ(String CNPJ, String razao, String porte, String capitalSocial, String naturezaJuridica, String simplesNacional, String mei, String tipo, String dataAbertura, String nomeFantasia, String situacaoCadastral, String situacaoDesde, String telefone, String email, String municipioIBGE, String endereco, String cep) {
+    public CNPJ(String CNPJ, String razao, String porte, String capitalSocial, String naturezaJuridica, String simplesNacional, String mei, String tipo, String dataAbertura, String nomeFantasia, String situacaoCadastral, String situacaoDesde, String telefone, String email, String municipioIBGE, String endereco, String cep, String bairro, String complemento, String estado, String numero) {
         this.CNPJ = CNPJ;
         this.Razao = razao;
         this.Porte = porte;
@@ -42,6 +50,10 @@ public class CNPJ {
         this.MunicipioIBGE = municipioIBGE;
         this.Endereco = endereco;
         this.CEP = cep;
+        this.Bairro = bairro;
+        this.Complemento = complemento;
+        this.Estado = estado;
+        this.Numero = numero;
     }
 
     // Getters e Setters
@@ -181,6 +193,38 @@ public class CNPJ {
         this.CEP = CEP;
     }
 
+    public String getBairro() {
+        return Bairro;
+    }
+
+    public void setBairro(String bairro) {
+        Bairro = bairro;
+    }
+
+    public String getComplemento() {
+        return Complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        Complemento = complemento;
+    }
+
+    public String getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(String estado) {
+        Estado = estado;
+    }
+
+    public String getNumero() {
+        return Numero;
+    }
+
+    public void setNumero(String numero) {
+        Numero = numero;
+    }
+
     @Override
     public String toString() {
         return "CNPJ{" +
@@ -201,6 +245,10 @@ public class CNPJ {
                 ", MunicipioIBGE='" + MunicipioIBGE + '\'' +
                 ", Endereco='" + Endereco + '\'' +
                 ", CEP='" + CEP + '\'' +
+                ", Bairro='" + Bairro + '\'' +
+                ", Complemento='" + Complemento + '\'' +
+                ", Estado='" + Estado + '\'' +
+                ", Numero='" + Numero + '\'' +
                 '}';
     }
 }

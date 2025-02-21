@@ -23,8 +23,7 @@ public class SrapyService {
         navigateToCNPJPage(cnpjNumber);
 
         extractCadastroEmpresarial();
-        extractDadosEstabelecimento();
-
+        extractEstabelecimento();
         closeDriver();
     }
 
@@ -75,14 +74,76 @@ public class SrapyService {
 
     }
 
-    private void extractDadosEstabelecimento() {
+
+    private void extractEstabelecimento() {
         WebElement container = driver.findElement(By.xpath("/html/body/div/div[2]/div/div/main/div/div[2]/div[5]"));
         List<WebElement> elements = container.findElements(By.cssSelector("span"));
 
-        for (WebElement element : elements) {
-            System.out.println(element.getText());
+
+        for (int i = 0; i < elements.size(); i++) {
+            WebElement element = elements.get(i);
+            String text = element.getText();
+            System.out.println("index" + i + " :" + text);
+
+            // Usa um switch para mapear os dados
+            switch (i) {
+                case 1:
+                    cnpj.setCNPJ(text); // CNPJ
+                    break;
+                case 3:
+                    cnpj.setTipo(text); // Tipo (Matriz/Filial)
+                    break;
+                case 5:
+                    cnpj.setDataAbertura(text); // Data de Abertura
+                    break;
+                case 7:
+                    cnpj.setNomeFantasia(text); // Nome Fantasia
+                    break;
+                case 9:
+                    cnpj.setSituacaoCadastral(text); // Situação Cadastral
+                    break;
+                case 11:
+                    cnpj.setSituacaoDesde(text); // Situação Desde
+                    break;
+                case 13:
+                    cnpj.setTelefone(text); // Telefone
+                    break;
+                case 15:
+                    cnpj.setEmail(text); // E-mail
+                    break;
+                case 17:
+                    cnpj.setMunicipioIBGE(text); // Município IBGE
+                    break;
+                case 19:
+                    cnpj.setEndereco(text); // Endereço (Rua)
+                    break;
+                case 21:
+                    cnpj.setNumero(text); // Número
+                    break;
+                case 24:
+                    cnpj.setBairro(text); // Bairro
+                    break;
+                case 26:
+                    cnpj.setMunicipioIBGE(text); // Município (Cidade)
+                    break;
+                case 28:
+                    cnpj.setEstado(text); // Estado (UF)
+                    break;
+                case 30:
+                    cnpj.setCEP(text); // CEP
+                    break;
+                default:
+                    // Índices que não são mapeados podem ser ignorados
+                    break;
+            }
         }
+
+        // Exibe o objeto CNPJ preenchido
+        System.out.println(cnpj.toString());
     }
+
+
+    private void extractCnae(){}
 
     private void closeDriver() {
         if (driver != null) {
