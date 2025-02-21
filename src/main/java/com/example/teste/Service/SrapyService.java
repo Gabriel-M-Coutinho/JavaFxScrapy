@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SrapyService {
@@ -22,8 +23,9 @@ public class SrapyService {
         setupDriver();
         navigateToCNPJPage(cnpjNumber);
 
-        extractCadastroEmpresarial();
-        extractEstabelecimento();
+        //extractCadastroEmpresarial();
+        //extractEstabelecimento();
+        extractCnae();
         closeDriver();
     }
 
@@ -85,65 +87,86 @@ public class SrapyService {
             String text = element.getText();
             System.out.println("index" + i + " :" + text);
 
-            // Usa um switch para mapear os dados
+
             switch (i) {
                 case 1:
-                    cnpj.setCNPJ(text); // CNPJ
+                    cnpj.setCNPJ(text);
                     break;
                 case 3:
-                    cnpj.setTipo(text); // Tipo (Matriz/Filial)
+                    cnpj.setTipo(text);
                     break;
                 case 5:
-                    cnpj.setDataAbertura(text); // Data de Abertura
+                    cnpj.setDataAbertura(text);
                     break;
                 case 7:
-                    cnpj.setNomeFantasia(text); // Nome Fantasia
+                    cnpj.setNomeFantasia(text);
                     break;
                 case 9:
-                    cnpj.setSituacaoCadastral(text); // Situação Cadastral
+                    cnpj.setSituacaoCadastral(text);
                     break;
                 case 11:
-                    cnpj.setSituacaoDesde(text); // Situação Desde
+                    cnpj.setSituacaoDesde(text);
                     break;
                 case 13:
-                    cnpj.setTelefone(text); // Telefone
+                    cnpj.setTelefone(text);
                     break;
                 case 15:
-                    cnpj.setEmail(text); // E-mail
+                    cnpj.setEmail(text);
                     break;
                 case 17:
-                    cnpj.setMunicipioIBGE(text); // Município IBGE
+                    cnpj.setMunicipioIBGE(text);
                     break;
                 case 19:
-                    cnpj.setEndereco(text); // Endereço (Rua)
+                    cnpj.setEndereco(text);
                     break;
                 case 21:
-                    cnpj.setNumero(text); // Número
+                    cnpj.setNumero(text);
                     break;
                 case 24:
-                    cnpj.setBairro(text); // Bairro
+                    cnpj.setBairro(text);
                     break;
                 case 26:
-                    cnpj.setMunicipioIBGE(text); // Município (Cidade)
+                    cnpj.setMunicipioIBGE(text);
                     break;
                 case 28:
-                    cnpj.setEstado(text); // Estado (UF)
+                    cnpj.setEstado(text);
                     break;
                 case 30:
-                    cnpj.setCEP(text); // CEP
+                    cnpj.setCEP(text);
                     break;
                 default:
-                    // Índices que não são mapeados podem ser ignorados
+
                     break;
             }
         }
 
-        // Exibe o objeto CNPJ preenchido
+
         System.out.println(cnpj.toString());
     }
 
 
-    private void extractCnae(){}
+    private void extractCnae() {
+        WebElement container = driver.findElement(By.cssSelector("table.table.table-compact"));
+        List<WebElement> elementList = container.findElements(By.cssSelector("tbody tr td span"));
+        List<String> listCnaeSecundario = new ArrayList<>();
+
+        for (int i = 1; i < elementList.size(); i = i + 2) {
+            if (i == 1) {// Acessa o primeiro par de elementos
+                cnpj.setCnaePrincipal(elementList.get(i).getText() + " " + elementList.get(i+1).getText());
+            } else if (i > 1) {
+
+                if (i + 1 < elementList.size()) {
+                    listCnaeSecundario.add(elementList.get(i).getText() + elementList.get(i + 1).getText());
+                } else {
+
+                    listCnaeSecundario.add(elementList.get(i).getText());
+                }
+            }
+        }
+
+        cnpj.setCnaeSecundario(listCnaeSecundario);
+        System.out.println(cnpj);
+    }
 
     private void closeDriver() {
         if (driver != null) {

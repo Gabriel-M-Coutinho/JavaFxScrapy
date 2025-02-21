@@ -225,9 +225,18 @@ public class CNPJ {
         Numero = numero;
     }
 
+    public void setCnaePrincipal(String cnaePrincipal){
+        CnaePrincipal = cnaePrincipal;
+    }
+    public void setCnaeSecundario(List<String> list){
+        CnaeSecundario = list;
+    }
+
+
     @Override
     public String toString() {
         return "CNPJ{" +
+                "CnaePrincipal" + CnaePrincipal + '\''+
                 "CNPJ='" + CNPJ + '\'' +
                 ", Razao='" + Razao + '\'' +
                 ", Porte='" + Porte + '\'' +
