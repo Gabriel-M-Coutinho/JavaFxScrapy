@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.teste.HelloController">
+    <stylesheets>
+        <URL value="@styles.css" /> <!-- Arquivo CSS externo -->
+    </stylesheets>
+    <children>
+        <!-- MenuBar -->
+        <MenuBar styleClass="menu-bar">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem id="importCNPJ" mnemonicParsing="false" onAction="#Scrapy" text="Pegar uma lista de cnpjs" />
+                        <MenuItem id="menuItemCarrregarCnpj" fx:id="menuItemCarregarCnpj" mnemonicParsing="false" onAction="#OpenExplorer" text="Carregar Lista de CNPJs" />
+                        <MenuItem id="menuPegarFiliais" fx:id="menuPegarFiliais" mnemonicParsing="false" text="Pegar filiais de uma lista de CNPJ" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Processar_Dados">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#Scrapy" text="Processar Lista" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+
+        <!-- Conteúdo Principal -->
+        <VBox alignment="TOP_CENTER" prefHeight="375.0" prefWidth="600.0" spacing="10" styleClass="content-box">
+            <padding>
+                <Insets bottom="10" left="20" right="20" top="10" />
+            </padding>
+            <children>
+                <!-- Label do Arquivo Selecionado -->
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label styleClass="label-title" text="Arquivo Selecionado:" />
+                    <Label fx:id="textArquivoSelecionado" styleClass="label-text" text="Nenhum Arquivo Selecionado" />
+                </HBox>
+
+                <!-- Botão para Selecionar Arquivo -->
+                <Button fx:id="buttonSelecionarArquivo" mnemonicParsing="false" onAction="#OpenExplorer" text="Selecionar Arquivo" styleClass="custom-button" />
+
+                <!-- Botões para Processar CNPJs e Buscar Filiais -->
+                <HBox alignment="CENTER" spacing="10">
+                    <Button fx:id="buttonProcessarCNPJs" mnemonicParsing="false" onAction="#Scrapy" text="Processar CNPJs" styleClass="custom-button" />
+                    <Button fx:id="buttonBuscarFiliais" mnemonicParsing="false" onAction="#extractFiliais" text="Buscar Filiais" styleClass="custom-button" />
+                </HBox>
+
+                <!-- Container da ProgressBar -->
+                <VBox fx:id="containerProgressBar" alignment="CENTER" spacing="10" visible="false">
+                    <Label styleClass="label-title" text="Processando..." />
+                    <ProgressBar fx:id="progressBar" prefWidth="400" progress="0.0" styleClass="progress-bar" />
+                </VBox>
+
+                <!-- Tabela para exibir os dados -->
+                <TableView fx:id="tabelaDados" prefHeight="200" prefWidth="600">
+                    <columns>
+                        <TableColumn fx:id="colunaCNPJ" text="CNPJ" />
+                        <TableColumn fx:id="colunaRazao" text="Razão Social" />
+                        <TableColumn fx:id="colunaNomeFantasia" text="Nome Fantasia" />
+                        <TableColumn fx:id="colunaSituacaoCadastral" text="Situação Cadastral" />
+                        <TableColumn fx:id="colunaTelefone" text="Telefone" />
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+    </children>
+</VBox>
