@@ -29,7 +29,7 @@ public class HelloController {
     private ProgressBar progressBar;
 
     private List<String> cnpjList;
-    private  List<CNPJ> response;
+    private  List<CNPJ> response = new ArrayList<>();
     private final SrapyService srapyService = new SrapyService();
     private final FileProcessorService fileProcessorService = new FileProcessorService();
     private List<String> cnpjsExtraidos = new ArrayList<>();
@@ -132,6 +132,8 @@ public class HelloController {
                         // Simula o processamento do CNPJ
                         System.out.println("Processando CNPJ: " + cnpj);
                          CNPJ cnpjData = srapyService.getData(cnpj);
+                        response.add(cnpjData);
+                        System.out.println(response);
 
                         // Atualiza o progresso
                         double progresso = (double) (i + 1) / cnpjsExtraidos.size();
